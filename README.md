@@ -1,6 +1,6 @@
-# Onion Monero Blockchain Explorer
+# Onion Clerici Blockchain Explorer
 
-Currently available Monero blockchain explorers have several limitations which are of
+Currently available Clerici blockchain explorers have several limitations which are of
 special importance to privacy-oriented users:
 
  - they use JavaScript,
@@ -8,13 +8,13 @@ special importance to privacy-oriented users:
  - track users activities through google analytics,
  - are closed sourced,
  - are not available as hidden services,
- - do not support Monero testnet nor stagenet networks,
+ - do not support Clerici testnet nor stagenet networks,
  - have limited JSON API.
 
 
 In this example, these limitations are addressed by development of
-an Onion Monero Blockchain Explorer. The example not only shows how to use
-Monero C++ libraries, but also demonstrates how to use:
+an Onion Clerici Blockchain Explorer. The example not only shows how to use
+Clerici C++ libraries, but also demonstrates how to use:
 
  - [crow](https://github.com/ipkn/crow) - C++ micro web framework
  - [mstch](https://github.com/no1msd/mstch) - C++ {{mustache}} templates
@@ -37,7 +37,7 @@ Stagenet version:
 
  - [https://stagenet.xmrchain.net/](https://stagenet.xmrchain.net/)
 
-i2p users (main Monero network):
+i2p users (main Clerici network):
 
  - [http://7o4gezpkye6ekibhgpkg7v626ze4idsirapufzrefkdysa6zxhha.b32.i2p/](http://7o4gezpkye6ekibhgpkg7v626ze4idsirapufzrefkdysa6zxhha.b32.i2p/)
 
@@ -51,9 +51,9 @@ Alternative block explorers:
 - [https://monerovision.com](https://monerovision.com)
 
 
-## Onion Monero Blockchain Explorer features
+## Onion Clerici Blockchain Explorer features
 
-The key features of the Onion Monero Blockchain Explorer are:
+The key features of the Onion Clerici Blockchain Explorer are:
 
  - no cookies, no web analytics trackers, no images,
  - open sourced,
@@ -61,12 +61,12 @@ The key features of the Onion Monero Blockchain Explorer are:
  - showing encrypted payments ID,
  - showing ring signatures,
  - showing transaction extra field,
- - showing public components of Monero addresses,
- - decoding which outputs and mixins belong to the given Monero address and viewkey,
- - can prove that you send Monero to someone,
+ - showing public components of Clerici addresses,
+ - decoding which outputs and mixins belong to the given Clerici address and viewkey,
+ - can prove that you send Clerici to someone,
  - detailed information about ring members, such as their age, timescale, and ring sizes,
  - showing number of amount output indices,
- - support Monero testnet and stagnet networks,
+ - support Clerici testnet and stagnet networks,
  - tx checker and pusher for online pushing of transactions,
  - estimate possible spendings based on address and viewkey,
  - can provide total amount of all miner fees,
@@ -86,16 +86,16 @@ Note: `devel` branch of the explorer follows `master` branch of the clerici!
 ## Compilation on Ubuntu 18.04/20.04
 
 
-#### Monero download and compilation
+#### Clerici download and compilation
 
-To download and compile recent Monero follow instructions
+To download and compile recent Clerici follow instructions
 in the following link:
 
 https://github.com/moneroexamples/clerici-compilation/blob/master/README.md
 
 ##### Compile and run the explorer
 
-Once the Monero compiles, the explorer can be downloaded and compiled
+Once the Clerici compiles, the explorer can be downloaded and compiled
 as follows:
 
 ```bash
@@ -238,7 +238,7 @@ When running via Docker, please use something like [Traefik](https://doc.traefik
 ## The explorer's command line options
 
 ```
-xmrblocks, Onion Monero Blockchain Explorer:
+xmrblocks, Onion Clerici Blockchain Explorer:
   -h [ --help ] [=arg(=1)] (=0)         produce help message
   -t [ --testnet ] [=arg(=1)] (=0)      use testnet blockchain
   -s [ --stagenet ] [=arg(=1)] (=0)     use stagenet blockchain
@@ -259,7 +259,7 @@ xmrblocks, Onion Monero Blockchain Explorer:
                                         enable users to have the index page on
                                         autorefresh
   --enable-emission-monitor [=arg(=1)] (=0)
-                                        enable Monero total emission monitoring
+                                        enable Clerici total emission monitoring
                                         thread
   -p [ --port ] arg (=8081)             default explorer port
   -x [ --bindaddr ] arg (=0.0.0.0)      default bind address for the explorer
@@ -315,9 +315,9 @@ docker run -it -d -v <path-to-clerici-blockchain-on-the-host>:/home/clerici/.clc
 
 Make sure to always start the portion of command line flags with `./xmrblocks` and set any flags you would like after that, as shown above.
 
-## Enable Monero emission
+## Enable Clerici emission
 
-Obtaining current Monero emission amount is not straight forward. Thus, by default it is
+Obtaining current Clerici emission amount is not straight forward. Thus, by default it is
 disabled. To enable it use `--enable-emission-monitor` flag, e.g.,
 
 
@@ -346,10 +346,10 @@ Every 10000 blocks, the thread will save current emission in a file, by default,
  displayed on the front page, e.g., :
 
 ```
-Monero emission (fees) is 14485540.430 (52545.373) as of 1313448 block
+Clerici emission (fees) is 14485540.430 (52545.373) as of 1313448 block
 ```
 
-The values given, can be checked using Monero daemon's  `print_coinbase_tx_sum` command.
+The values given, can be checked using Clerici daemon's  `print_coinbase_tx_sum` command.
 For example, for the above example: `print_coinbase_tx_sum 0 1313449`.
 
 To disable the monitor, simply restart the explorer without `--enable-emission-monitor` flag.
@@ -652,7 +652,7 @@ For this, we use recipient's address and our tx private key as a viewkey value,
 Checking outputs:
 
 ```bash
-# we use here official Monero project's donation address as an example
+# we use here official Clerici project's donation address as an example
 curl  -w "\n" -X GET "http://127.0.0.1:8081/api/outputs?txhash=17049bc5f2d9fbca1ce8dae443bbbbed2fc02f1ee003ffdd0571996905faa831&address=44AFFq5kSiGBoZ4NMDwYtN18obc8AemS33DBLWs3H7otXft3XjrpDtQGv7SqSsaBYBb98uNbr2VBBEt7f2wfn3RVGQBEP3A&viewkey=f359631075708155cc3d92a32b75a7d02a5dcf27756707b47a2b31b21c389501&txprove=0"
 ```
 
@@ -858,7 +858,7 @@ var api_minor = response.data.api & 0xffff;
 
 #### api/rawblock/<block_number|block_hash>
 
-Return raw json block data, as represented in Monero.
+Return raw json block data, as represented in Clerici.
 
 ```bash
 curl  -w "\n" -X GET "http://139.162.32.245:8081/api/rawblock/1293257"
@@ -868,7 +868,7 @@ Example result not shown.
 
 #### api/rawtransaction/<tx_hash>
 
-Return raw json tx data, as represented in Monero.
+Return raw json tx data, as represented in Clerici.
 
 ```bash
 curl  -w "\n" -X GET "http://139.162.32.245:8081/api/rawtransaction/6093260dbe79fd6277694d14789dc8718f1bd54457df8bab338c2efa3bb0f03d"
