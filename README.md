@@ -79,9 +79,9 @@ The key features of the Onion Monero Blockchain Explorer are:
 
 Current development branch:
 
- - https://github.com/moneroexamples/onion-monero-blockchain-explorer/tree/devel
+ - https://github.com/moneroexamples/onion-clerici-blockchain-explorer/tree/devel
 
-Note: `devel` branch of the explorer follows `master` branch of the monero!
+Note: `devel` branch of the explorer follows `master` branch of the clerici!
 
 ## Compilation on Ubuntu 18.04/20.04
 
@@ -91,7 +91,7 @@ Note: `devel` branch of the explorer follows `master` branch of the monero!
 To download and compile recent Monero follow instructions
 in the following link:
 
-https://github.com/moneroexamples/monero-compilation/blob/master/README.md
+https://github.com/moneroexamples/clerici-compilation/blob/master/README.md
 
 ##### Compile and run the explorer
 
@@ -99,14 +99,14 @@ Once the Monero compiles, the explorer can be downloaded and compiled
 as follows:
 
 ```bash
-# go to home folder if still in ~/monero
+# go to home folder if still in ~/clerici
 cd ~
 
 # download the source code
-git clone https://github.com/moneroexamples/onion-monero-blockchain-explorer.git
+git clone https://github.com/moneroexamples/onion-clerici-blockchain-explorer.git
 
 # enter the downloaded sourced code folder
-cd onion-monero-blockchain-explorer
+cd onion-clerici-blockchain-explorer
 
 # make a build folder and enter it
 mkdir build && cd build
@@ -124,19 +124,19 @@ To run it:
 ./xmrblocks
 ```
 
-By default it will look for blockchain in its default location i.e., `~/.bitmonero/lmdb`.
+By default it will look for blockchain in its default location i.e., `~/.clc/lmdb`.
 You can use `-b` option if its in different location.
 
 For example:
 
 ```bash
-./xmrblocks -b /home/mwo/non-default-monero-location/lmdb/
+./xmrblocks -b /home/mwo/non-default-clerici-location/lmdb/
 ```
 
 Example output:
 
 ```bash
-[mwo@arch onion-monero-blockchain-explorer]$ ./xmrblocks
+[mwo@arch onion-clerici-blockchain-explorer]$ ./xmrblocks
 2016-May-28 10:04:49.160280 Blockchain initialized. last block: 1056761, d0.h0.m12.s47 time ago, current difficulty: 1517857750
 (2016-05-28 02:04:49) [INFO    ] Crow/0.1 server is running, local port 8081
 ```
@@ -146,7 +146,7 @@ Go to your browser: http://127.0.0.1:8081
 ## Compiling and running with Docker
 
 The explorer can also be compiled using `docker build` as described below. By default it compiles
-against latest release (`release-v0.17`) branch of monero:
+against latest release (`release-v0.17`) branch of clerici:
 
 ```
 # build using all CPU cores
@@ -155,27 +155,27 @@ docker build --no-cache -t xmrblocks .
 # alternatively, specify number of cores to use (e.g. 2)
 docker build --no-cache --build-arg NPROC=2  -t xmrblocks .
 
-# to build against development branch of monero (i.e. master branch)
-docker build --no-cache --build-arg NPROC=3 --build-arg MONERO_BRANCH=master  -t xmrblocks .
+# to build against development branch of clerici (i.e. master branch)
+docker build --no-cache --build-arg NPROC=3 --build-arg CLERICI_BRANCH=master  -t xmrblocks .
 ```
 
 - The build needs 3 GB space.
 - The final container image is 179MB.
 
-To run it, mount the monero blockchain onto the container as volume.
+To run it, mount the clerici blockchain onto the container as volume.
 
 ```
 # either run in foreground
-docker run -it -v <path-to-monero-blockckain-on-the-host>:/home/monero/.bitmonero -p 8081:8081  xmrblocks
+docker run -it -v <path-to-clerici-blockckain-on-the-host>:/home/clerici/.clc -p 8081:8081  xmrblocks
 
 # or in background
-docker run -it -d -v <path-to-monero-blockchain-on-the-host>:/home/monero/.bitmonero -p 8081:8081  xmrblocks
+docker run -it -d -v <path-to-clerici-blockchain-on-the-host>:/home/clerici/.clc -p 8081:8081  xmrblocks
 ```
 
 Example output:
 
 ```
-docker run --rm -it -v /mnt/w7/bitmonero:/home/monero/.bitmonero -p 8081:8081 xmrblocks
+docker run --rm -it -v /mnt/w7/clc:/home/clerici/.clc -p 8081:8081 xmrblocks
 Staring in non-ssl mode
 (2020-04-20 16:20:00) [INFO    ] Crow/0.1 server is running at 0.0.0.0:8081 using 1 threads
 ```
@@ -192,13 +192,13 @@ services:
     restart: unless-stopped
     container_name: monerod
     volumes:
-      - xmrdata:/home/monero/.bitmonero
+      - xmrdata:/home/clerici/.clc
     ports:
-      - 18080:18080
-      - 18089:18089
+      - 28080:28080
+      - 28089:28089
     command:
       - "--rpc-restricted-bind-ip=0.0.0.0"
-      - "--rpc-restricted-bind-port=18089"
+      - "--rpc-restricted-bind-port=28089"
       - "--public-node"
       - "--no-igd"
       - "--enable-dns-blocklist"
@@ -206,11 +206,11 @@ services:
 
   explore:
     image: xmrblocks:latest
-    build: ./onion-monero-blockchain-explorer
+    build: ./onion-clerici-blockchain-explorer
     container_name: explore
     restart: unless-stopped
     volumes:
-      - xmrdata:/home/monero/.bitmonero
+      - xmrdata:/home/clerici/.clc
     ports:
       - 8081:8081
     command: ["./xmrblocks --daemon-url=monerod:18089 --enable-json-api --enable-autorefresh-option --enable-emission-monitor --enable-pusher"]
@@ -222,14 +222,14 @@ services:
 To build this image, run the following:
 
 ```bash
-git clone https://github.com/moneroexamples/onion-monero-blockchain-explorer.git
+git clone https://github.com/moneroexamples/onion-clerici-blockchain-explorer.git
 docker-compose build
 ```
 
 Or build and run in one step via:
 
 ```bash
-git clone https://github.com/moneroexamples/onion-monero-blockchain-explorer.git
+git clone https://github.com/moneroexamples/onion-clerici-blockchain-explorer.git
 docker-compose up -d
 ```
 
@@ -282,7 +282,7 @@ xmrblocks, Onion Monero Blockchain Explorer:
                                         queries. Default is 0 which means it is
                                         based you on the cpu
   -b [ --bc-path ] arg                  path to lmdb folder of the blockchain,
-                                        e.g., ~/.bitmonero/lmdb
+                                        e.g., ~/.clc/lmdb
   --ssl-crt-file arg                    path to crt file for ssl (https)
                                         functionality
   --ssl-key-file arg                    path to key file for ssl (https)
@@ -297,20 +297,20 @@ Example usage, defined as bash aliases.
 
 ```bash
 # for mainnet explorer
-alias xmrblocksmainnet='~/onion-monero-blockchain-explorer/build/xmrblocks    --port 8081 --testnet-url "http://139.162.32.245:8082" --enable-pusher --enable-emission-monitor'
+alias xmrblocksmainnet='~/onion-clerici-blockchain-explorer/build/xmrblocks    --port 8081 --testnet-url "http://139.162.32.245:8082" --enable-pusher --enable-emission-monitor'
 
 # for testnet explorer
-alias xmrblockstestnet='~/onion-monero-blockchain-explorer/build/xmrblocks -t --port 8082 --mainnet-url "http://139.162.32.245:8081" --enable-pusher --enable-emission-monitor'
+alias xmrblockstestnet='~/onion-clerici-blockchain-explorer/build/xmrblocks -t --port 8082 --mainnet-url "http://139.162.32.245:8081" --enable-pusher --enable-emission-monitor'
 ```
 
 Example usage when running via Docker:
 
 ```bash
 # Run in foreground
-docker run -it -v <path-to-monero-blockckain-on-the-host>:/home/monero/.bitmonero -p 8081:8081  xmrblocks "./xmrblocks --daemon-url=node.sethforprivacy.com:18089 --enable-json-api --enable-autorefresh-option --enable-emission-monitor --enable-pusher"
+docker run -it -v <path-to-clerici-blockckain-on-the-host>:/home/clerici/.clc -p 8081:8081  xmrblocks "./xmrblocks --daemon-url=node.sethforprivacy.com:18089 --enable-json-api --enable-autorefresh-option --enable-emission-monitor --enable-pusher"
 
 # Run in background
-docker run -it -d -v <path-to-monero-blockchain-on-the-host>:/home/monero/.bitmonero -p 8081:8081  xmrblocks "./xmrblocks --daemon-url=node.sethforprivacy.com:18089 --enable-json-api --enable-autorefresh-option --enable-emission-monitor --enable-pusher"
+docker run -it -d -v <path-to-clerici-blockchain-on-the-host>:/home/clerici/.clc -p 8081:8081  xmrblocks "./xmrblocks --daemon-url=node.sethforprivacy.com:18089 --enable-json-api --enable-autorefresh-option --enable-emission-monitor --enable-pusher"
 ```
 
 Make sure to always start the portion of command line flags with `./xmrblocks` and set any flags you would like after that, as shown above.
@@ -329,10 +329,10 @@ This flag will enable emission monitoring thread. When started, the thread
  will initially scan the entire blockchain, and calculate the cumulative emission based on each block.
 Since it is a separate thread, the explorer will work as usual during this time.
 Every 10000 blocks, the thread will save current emission in a file, by default,
- in `~/.bitmonero/lmdb/emission_amount.txt`. For testnet or stagenet networks,
- it is `~/.bitmonero/testnet/lmdb/emission_amount.txt` or `~/.bitmonero/stagenet/lmdb/emission_amount.txt`. This file is used so that we don't
+ in `~/.clc/lmdb/emission_amount.txt`. For testnet or stagenet networks,
+ it is `~/.clc/testnet/lmdb/emission_amount.txt` or `~/.clc/stagenet/lmdb/emission_amount.txt`. This file is used so that we don't
  need to rescan entire blockchain whenever the explorer is restarted. When the
- explorer restarts, the thread will first check if `~/.bitmonero/lmdb/emission_amount.txt`
+ explorer restarts, the thread will first check if `~/.clc/lmdb/emission_amount.txt`
  is present, read its values, and continue from there if possible. Subsequently, only the initial
  use of the thread is time consuming. Once the thread scans the entire blockchain, it updates
  the emission amount using new blocks as they come. Since the explorer writes this file, there can
@@ -876,7 +876,7 @@ curl  -w "\n" -X GET "http://139.162.32.245:8081/api/rawtransaction/6093260dbe79
 
 Example result not shown.
 
-## Other monero examples
+## Other clerici examples
 
 Other examples can be found on  [github](https://github.com/moneroexamples?tab=repositories).
 Please know that some of the examples/repositories are not

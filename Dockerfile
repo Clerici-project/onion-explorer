@@ -1,7 +1,7 @@
 # Use ubuntu:20.04 as base for builder stage image
 FROM ubuntu:20.04 as builder
 
-# Set Monero branch/tag to be used for monerod compilation
+# Set Clerici branch/tag to be used for monerod compilation
 ARG MONERO_BRANCH=release-v0.17
 
 # Added DEBIAN_FRONTEND=noninteractive to workaround tzdata prompt on installation
